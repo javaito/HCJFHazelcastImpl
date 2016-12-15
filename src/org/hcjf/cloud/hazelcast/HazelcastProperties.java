@@ -34,7 +34,7 @@ public class HazelcastProperties {
     public static final String GROUP_NAME = "hcjf.hazelcast.impl.group.name";
     public static final String LOCK_IMPL_SEMAPHORE_NAME = "hcjf.hazelcast.impl.lock.impl.semaphore.name";
 
-    static {
+    public static void start() {
         SystemProperties.putDefaultValue(INSTANCE_NAME, "hazelcast.instance");
         SystemProperties.putDefaultValue(NETWORK_PORT, Integer.toString(NetworkConfig.DEFAULT_PORT));
         SystemProperties.putDefaultValue(NETWORK_PORT_AUTOINCREMENT, "true");
