@@ -3,11 +3,13 @@ package org.hcjf.cloud.hazelcast;
 import com.hazelcast.config.*;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.ILock;
 import org.hcjf.cloud.CloudServiceImpl;
 import org.hcjf.properties.SystemProperties;
 
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -110,6 +112,17 @@ public class HazelcastImpl implements CloudServiceImpl {
     @Override
     public Lock getLock(String lockName) {
         return hazelcastInstance.getLock(lockName);
+    }
+
+    /**
+     * Return the distributed lock condition over specific lock object.
+     * @param conditionName Lock condition name.
+     * @param lock Specific lock object.
+     * @return Return the lock condition.
+     */
+    @Override
+    public Condition getCondition(String conditionName, Lock lock) {
+        return ((ILock)lock).newCondition(conditionName);
     }
 
 }
