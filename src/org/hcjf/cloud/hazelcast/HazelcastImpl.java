@@ -8,6 +8,7 @@ import org.hcjf.properties.SystemProperties;
 
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.locks.Lock;
 
 /**
  *
@@ -99,6 +100,16 @@ public class HazelcastImpl implements CloudServiceImpl {
     @Override
     public void unlock(String resourceName) throws InterruptedException {
         hazelcastInstance.getSemaphore(SystemProperties.get(HazelcastProperties.LOCK_IMPL_SEMAPHORE_NAME)).release();
+    }
+
+    /**
+     * Return the implementation of the Lock interface distributed.
+     * @param lockName Name of the lock.
+     * @return Distributed lock implementation.
+     */
+    @Override
+    public Lock getLock(String lockName) {
+        return hazelcastInstance.getLock(lockName);
     }
 
 }
