@@ -4,6 +4,8 @@ import com.hazelcast.config.*;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ILock;
+import org.hcjf.cloud.CloudCache;
+import org.hcjf.cloud.CloudCacheStrategy;
 import org.hcjf.cloud.CloudServiceImpl;
 import org.hcjf.properties.SystemProperties;
 
@@ -123,6 +125,16 @@ public class HazelcastImpl implements CloudServiceImpl {
     @Override
     public Condition getCondition(String conditionName, Lock lock) {
         return ((ILock)lock).newCondition(conditionName);
+    }
+
+    @Override
+    public void createCache(String cacheName, CloudCacheStrategy strategy) {
+
+    }
+
+    @Override
+    public CloudCache getCache(String cacheName) {
+        return null;
     }
 
 }
