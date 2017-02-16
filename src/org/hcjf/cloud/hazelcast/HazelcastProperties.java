@@ -42,7 +42,7 @@ public class HazelcastProperties {
         SystemProperties.putDefaultValue(NETWORK_JOIN_MULTICAST_LOOPBACK_MODE_ENABLED, Boolean.toString(MulticastConfig.DEFAULT_LOOPBACK_MODE_ENABLED));
         SystemProperties.putDefaultValue(NETWORK_JOIN_MULTICAST_GROUP, MulticastConfig.DEFAULT_MULTICAST_GROUP);
         SystemProperties.putDefaultValue(NETWORK_JOIN_MULTICAST_PORT, Integer.toString(MulticastConfig.DEFAULT_MULTICAST_PORT));
-        SystemProperties.putDefaultValue(NETWORK_JOIN_MULTICAST_TIMEOUT, "120");
+        SystemProperties.putDefaultValue(NETWORK_JOIN_MULTICAST_TIMEOUT, "10");
         SystemProperties.putDefaultValue(NETWORK_JOIN_MULTICAST_TIME_TO_LIVE, Integer.toString(MulticastConfig.DEFAULT_MULTICAST_TTL));
         SystemProperties.putDefaultValue(NETWORK_JOIN_MULTICAST_TRUSTED_INTERFACES, "[]");
         SystemProperties.putDefaultValue(NETWORK_JOIN_TCPIP_ENABLED, "false");
