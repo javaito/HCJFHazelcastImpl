@@ -26,6 +26,7 @@ public class HazelcastImpl implements CloudServiceImpl {
     public HazelcastImpl() {
         Config config = new Config();
         config.setInstanceName(SystemProperties.get(HazelcastProperties.INSTANCE_NAME));
+        config.setProperty("hazelcast.shutdownhook.enabled", "false");
 
         GroupConfig groupConfig = config.getGroupConfig();
         groupConfig.setName(SystemProperties.get(HazelcastProperties.GROUP_NAME));
@@ -137,4 +138,8 @@ public class HazelcastImpl implements CloudServiceImpl {
         return null;
     }
 
+    @Override
+    public void shutdown() {
+        hazelcastInstance.shutdown();
+    }
 }
