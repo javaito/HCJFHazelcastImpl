@@ -4,9 +4,9 @@ import com.hazelcast.config.*;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ILock;
-import org.hcjf.cloud.CloudCache;
-import org.hcjf.cloud.CloudCacheStrategy;
 import org.hcjf.cloud.CloudServiceImpl;
+import org.hcjf.cloud.cache.CloudCache;
+import org.hcjf.cloud.cache.CloudCacheStrategy;
 import org.hcjf.properties.SystemProperties;
 
 import java.util.Map;
