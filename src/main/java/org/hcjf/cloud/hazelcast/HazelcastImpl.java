@@ -4,13 +4,14 @@ import com.hazelcast.config.*;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ILock;
-import org.hcjf.cloud.CloudCache;
-import org.hcjf.cloud.CloudCacheStrategy;
 import org.hcjf.cloud.CloudServiceImpl;
+import org.hcjf.cloud.cache.CloudCache;
+import org.hcjf.cloud.cache.CloudCacheStrategy;
 import org.hcjf.properties.SystemProperties;
 
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
@@ -83,6 +84,27 @@ public class HazelcastImpl implements CloudServiceImpl {
     @Override
     public <V> Queue<V> getQueue(String queueName) {
         return hazelcastInstance.getQueue(queueName);
+    }
+
+    /**
+     * This method provides an implementation of distributed set. All the nodes
+     * on the cloud shares this instance.
+     * @param setName Name of the set.
+     * @param <V> Type of the set's values.
+     * @return Return the instance of the distributed set.
+     */
+    public <V extends Object> Set<V> getSet(String setName) {
+        return hazelcastInstance.getSet(setName);
+    }
+
+    /**
+     * This method provides an implementation of distributed counter. All the nodes
+     * on the cloud shares this instance.
+     * @param counterName Name of the counter.
+     * @return Return thr instance of the counter.
+     */
+    public HazelcastCounter getCounter(String counterName) {
+        return new HazelcastCounter(hazelcastInstance.getAtomicLong(counterName));
     }
 
     /**
