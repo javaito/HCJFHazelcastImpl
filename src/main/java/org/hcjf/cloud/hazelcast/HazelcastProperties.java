@@ -6,8 +6,8 @@ import com.hazelcast.config.TcpIpConfig;
 import org.hcjf.properties.SystemProperties;
 
 /**
+ * Hazelcas implementation properties file.
  * @author javaito
- * @email javaito@gmail.com
  */
 public class HazelcastProperties {
 
@@ -33,6 +33,7 @@ public class HazelcastProperties {
     public static final String MAP_STORE_ENABLE = "hcjf.hazelcast.impl.map.store.enable";
     public static final String GROUP_NAME = "hcjf.hazelcast.impl.group.name";
     public static final String LOCK_IMPL_SEMAPHORE_NAME = "hcjf.hazelcast.impl.lock.impl.semaphore.name";
+    public static final String CACHE_MAP_NAME = "hcjf.hazelcast.impl.cache.map.name";
 
     public static void init() {
         SystemProperties.putDefaultValue(INSTANCE_NAME, "hazelcast.instance");
@@ -57,6 +58,7 @@ public class HazelcastProperties {
         SystemProperties.putDefaultValue(MAP_STORE_ENABLE, "false");
         SystemProperties.putDefaultValue(GROUP_NAME, "hazelcast.group");
         SystemProperties.putDefaultValue(LOCK_IMPL_SEMAPHORE_NAME, "hazelcast.lock.impl");
+        SystemProperties.putDefaultValue(CACHE_MAP_NAME, "hcjf.hazelcast.impl.cache.map.name");
     }
 
 }

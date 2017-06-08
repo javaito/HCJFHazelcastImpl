@@ -7,8 +7,10 @@ import com.hazelcast.core.ILock;
 import org.hcjf.cloud.CloudServiceImpl;
 import org.hcjf.cloud.cache.CloudCache;
 import org.hcjf.cloud.cache.CloudCacheStrategy;
+import org.hcjf.cloud.counter.Counter;
 import org.hcjf.properties.SystemProperties;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -16,13 +18,13 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
 /**
- *
+ * Holanda catalina java framework Cloud service implementation using hazelcast api.
  * @author javaito
- * @mail javaito@gmail.com
  */
 public class HazelcastImpl implements CloudServiceImpl {
 
     private final HazelcastInstance hazelcastInstance;
+    private Map<String, HazelcastCloudCache> cacheMap;
 
     public HazelcastImpl() {
         Config config = new Config();
@@ -103,7 +105,7 @@ public class HazelcastImpl implements CloudServiceImpl {
      * @param counterName Name of the counter.
      * @return Return thr instance of the counter.
      */
-    public HazelcastCounter getCounter(String counterName) {
+    public Counter getCounter(String counterName) {
         return new HazelcastCounter(hazelcastInstance.getAtomicLong(counterName));
     }
 
@@ -121,7 +123,6 @@ public class HazelcastImpl implements CloudServiceImpl {
 
     /**
      * This method unlocks a previously locked resource.
-     *
      * @param resourceName The name of the resource locked.
      */
     @Override
@@ -150,16 +151,34 @@ public class HazelcastImpl implements CloudServiceImpl {
         return ((ILock)lock).newCondition(conditionName);
     }
 
+    /**
+     * This method creates an instance of distributed cache object.
+     * @param cacheName Name of the cache.
+     * @param strategies Set with the strategies for the cache instance.
+     */
     @Override
-    public void createCache(String cacheName, CloudCacheStrategy strategy) {
-
+    public void createCache(String cacheName, Set<CloudCacheStrategy> strategies) {
+        synchronized (this) {
+            if(cacheMap == null) {
+                cacheMap = new HashMap<>(); //getMap(SystemProperties.get(HazelcastProperties.CACHE_MAP_NAME));
+            }
+        }
+        cacheMap.put(cacheName, new HazelcastCloudCache(cacheName, strategies));
     }
 
+    /**
+     * Return the cache object associated to the specific name.
+     * @param cacheName Name of the cache.
+     * @return Distributed cache instance.
+     */
     @Override
     public CloudCache getCache(String cacheName) {
         return null;
     }
 
+    /**
+     * Shutdown hook method.
+     */
     @Override
     public void shutdown() {
         hazelcastInstance.shutdown();
