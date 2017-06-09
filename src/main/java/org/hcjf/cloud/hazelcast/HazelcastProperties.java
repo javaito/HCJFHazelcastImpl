@@ -11,6 +11,7 @@ import org.hcjf.properties.SystemProperties;
  */
 public class HazelcastProperties {
 
+    public static final String LOG_TAG = "hcjf.hazelcast.impl.log.tag";
     public static final String INSTANCE_NAME = "hcjf.hazelcast.impl.instance.name";
     public static final String NETWORK_PORT = "hcjf.hazelcast.impl.network.port";
     public static final String NETWORK_PORT_AUTOINCREMENT = "hcjf.hazelcast.impl.network.port.autoincrement";
@@ -36,6 +37,7 @@ public class HazelcastProperties {
     public static final String CACHE_MAP_NAME = "hcjf.hazelcast.impl.cache.map.name";
 
     public static void init() {
+        SystemProperties.putDefaultValue(LOG_TAG, "HAZELCAST");
         SystemProperties.putDefaultValue(INSTANCE_NAME, "hazelcast.instance");
         SystemProperties.putDefaultValue(NETWORK_PORT, Integer.toString(NetworkConfig.DEFAULT_PORT));
         SystemProperties.putDefaultValue(NETWORK_PORT_AUTOINCREMENT, "true");

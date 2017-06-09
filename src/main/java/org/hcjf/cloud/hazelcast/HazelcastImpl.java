@@ -8,6 +8,7 @@ import org.hcjf.cloud.CloudServiceImpl;
 import org.hcjf.cloud.cache.CloudCache;
 import org.hcjf.cloud.cache.CloudCacheStrategy;
 import org.hcjf.cloud.counter.Counter;
+import org.hcjf.cloud.hazelcast.log.HazelcastLogListener;
 import org.hcjf.properties.SystemProperties;
 
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
+import java.util.logging.Level;
 
 /**
  * Holanda catalina java framework Cloud service implementation using hazelcast api.
@@ -30,6 +32,7 @@ public class HazelcastImpl implements CloudServiceImpl {
         Config config = new Config();
         config.setInstanceName(SystemProperties.get(HazelcastProperties.INSTANCE_NAME));
         config.setProperty("hazelcast.shutdownhook.enabled", "false");
+        config.setProperty("hazelcast.logging.type", "none");
 
         GroupConfig groupConfig = config.getGroupConfig();
         groupConfig.setName(SystemProperties.get(HazelcastProperties.GROUP_NAME));
@@ -61,7 +64,8 @@ public class HazelcastImpl implements CloudServiceImpl {
         SemaphoreConfig semaphoreConfig = config.getSemaphoreConfig(SystemProperties.get(HazelcastProperties.LOCK_IMPL_SEMAPHORE_NAME));
         semaphoreConfig.setInitialPermits(1);
 
-        hazelcastInstance= Hazelcast.newHazelcastInstance(config);
+        hazelcastInstance = Hazelcast.newHazelcastInstance(config);
+        hazelcastInstance.getLoggingService().addLogListener(Level.ALL, new HazelcastLogListener());
     }
 
     /**
