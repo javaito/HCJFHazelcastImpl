@@ -10,11 +10,15 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 /**
+ * Listener to catch all the hazelcast logs and use the hcjf log implementation.
  * @author javaito
- * @email javaito@gmail.com
  */
 public class HazelcastLogListener implements LogListener {
 
+    /**
+     * Receive all the logs evants.
+     * @param logEvent Log event.
+     */
     @Override
     public void log(LogEvent logEvent) {
         LogRecord record = logEvent.getLogRecord();
