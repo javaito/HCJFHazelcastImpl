@@ -122,7 +122,7 @@ public class HazelcastImpl implements CloudServiceImpl {
      */
     @Override
     public void lock(String resourceName) throws InterruptedException {
-        hazelcastInstance.getSemaphore(SystemProperties.get(HazelcastProperties.LOCK_IMPL_SEMAPHORE_NAME)).acquire();
+        hazelcastInstance.getSemaphore(resourceName).acquire();
     }
 
     /**
@@ -131,7 +131,7 @@ public class HazelcastImpl implements CloudServiceImpl {
      */
     @Override
     public void unlock(String resourceName) throws InterruptedException {
-        hazelcastInstance.getSemaphore(SystemProperties.get(HazelcastProperties.LOCK_IMPL_SEMAPHORE_NAME)).release();
+        hazelcastInstance.getSemaphore(resourceName).release();
     }
 
     /**
